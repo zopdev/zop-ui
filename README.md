@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ZopDev
 
-## Getting Started
+Zop is a comprehensive tool for managing cloud infrastructure. It consists of three main components:
 
-First, run the development server:
+1. **zop-ui**: User interface for managing and monitoring cloud resources.
+2. **zop-api**: Backend API service.
+3. **zop-cli**: Command-line interface for developers and admins.
+
+---
+
+## Installation
+
+### Prerequisites
+
+- Docker installed on your system.
+- Node.js version "^18.18.0 || ^19.8.0 || >= 20.0.0" is required.
+
+---
+
+### Running Locally
+
+#### zop-api
+
+Run the following command to pull and start the Docker image for the zop-api:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+    docker run -d -p 8000:8000 --name zop-api zop.dev/zop-api:v0.0.1
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### zop-ui
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Run the following command to pull and start the Docker image for the zop-ui:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+    docker run -d -p 3000:3000 -e NEXT_PUBLIC_API_BASE_URL='http://localhost:8000' --name zop-ui zop.dev/zop-ui:v0.0.1
+```
 
-## Learn More
+> **Note:** The environment variable `NEXT_PUBLIC_API_BASE_URL` is used by zop-ui to connect to the
+> zop-api. Ensure that the value matches the API's running base URL.
 
-To learn more about Next.js, take a look at the following resources:
+#### zop-cli
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run the following command install zop-cli:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+   go install zop.dev/clizop@latest
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> **Note:** Set the environment variable `ZOP_API_URL`, used by zop-cli to connect to the zop-api.
+> Ensure that the value matches the API's running base URL.
