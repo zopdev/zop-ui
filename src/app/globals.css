@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*:focus {
+  outline: none;
+}
+
+.center-complete-loader {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  z-index: 1500;
+  transform: translate(-50%, -50%);
+}
