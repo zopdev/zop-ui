@@ -18,3 +18,9 @@ body {
   z-index: 1500;
   transform: translate(-50%, -50%);
 }
+
+::-webkit-scrollbar {
+  height: 4px;
+  width: 0px;
+  background: #cbd5e1;
+}

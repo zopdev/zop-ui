@@ -1,14 +1,15 @@
 'use client';
 
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Disclosure, Transition, Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import AppLogo from '../../svg/appLogo';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import CloudAccountSVG from '../../svg/cloudAccount';
 import APP_LOGO_IMAGE from '../../public/applogoWithText.svg';
+import ApplicationSvg from '../../svg/application';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -16,34 +17,21 @@ function classNames(...classes) {
 
 export function TopBar() {
   const router = useRouter();
-  const [tab] = useState(0);
+  const pathname = usePathname();
+  const [tab, setTab] = useState();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  //   useEffect(() => {
-  //     let DashboardView = navigation
-  //       .map(function (ele) {
-  //         return `/${ele.routeName.split("/")[1]}`;
-  //       })
-  //       .indexOf(`/${router.asPath.split("/")[1]}`);
+  useEffect(() => {
+    let DashboardView = navigation
+      .map(function (ele) {
+        return `/${ele.routeName.split('/')[1]}`;
+      })
+      .indexOf(`/${pathname.split('/')[1]}`);
 
-  //     DashboardView = DashboardView !== -1 ? DashboardView || 0 : -1;
-  //     if (
-  //       DashboardView === -1 &&
-  //       `${router.asPath.split("/")[1]}` === "table" &&
-  //       router?.query?.["cloud-account-id"] === undefined
-  //     ) {
-  //       setTab(0);
-  //     } else if (
-  //       DashboardView === -1 &&
-  //       `${router.asPath.split("/")[1]}` === "table" &&
-  //       router?.query?.["cloud-account-id"] &&
-  //       router?.query?.["application-id"] === undefined
-  //     ) {
-  //       setTab(1);
-  //     } else {
-  //       setTab(DashboardView);
-  //     }
-  //   }, [router.route]);
+    DashboardView = DashboardView !== -1 ? DashboardView || 0 : -1;
+
+    setTab(DashboardView);
+  }, [pathname]);
 
   //   const handleAppData = (entity, values) =>
   //     setAppData((prevValues) => ({ ...prevValues, [entity]: values }));
@@ -118,14 +106,14 @@ export function TopBar() {
       isLoading: false,
       icon: CloudAccountSVG,
     },
-    // {
-    //   name: "Applications",
-    //   routeName: "/applications",
-    //   hover: true,
-    //   selected: true,
-    //   isLoading: false,
-    //   icon: ApplicationSvg,
-    // },
+    {
+      name: 'Applications',
+      routeName: '/applications',
+      hover: true,
+      selected: true,
+      isLoading: false,
+      icon: ApplicationSvg,
+    },
     // {
     //   name: "Observability",
     //   routeName:
