@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { Disclosure, Transition, Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import AppLogo from '../../svg/appLogo';
@@ -10,6 +10,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import CloudAccountSVG from '../../svg/cloudAccount';
 import APP_LOGO_IMAGE from '../../public/applogoWithText.svg';
 import ApplicationSvg from '../../svg/application';
+import { useInitializeHeader } from '../../hooks/Header/addHeader';
+import { AppContext } from '../../libs/context';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -18,8 +20,10 @@ function classNames(...classes) {
 export function TopBar() {
   const router = useRouter();
   const pathname = usePathname();
+  useInitializeHeader();
   const [tab, setTab] = useState();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { appData } = useContext(AppContext);
 
   useEffect(() => {
     let DashboardView = navigation

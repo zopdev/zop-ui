@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useEffect, useRef, useState } from 'react';
 
-export default function DraggableList({ chips, handleListUpdate }) {
+export default function DraggableList({ chips, handleListUpdate = () => {}, disableDrag = false }) {
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
@@ -16,14 +16,12 @@ export default function DraggableList({ chips, handleListUpdate }) {
   const dragOverItem = useRef();
 
   const handleDragStart = (e, position) => {
+    if (disableDrag) return;
     draggingItem.current = position;
   };
 
-  //   const handleDragEnter = (e, position) => {
-  //     dragOverItem.current = position;
-  //   };
-
   const handleDragEnter = (e, position) => {
+    if (disableDrag) return;
     dragOverItem.current = position;
     const listCopy = [...pages];
     const draggingItemContent = listCopy[draggingItem.current];
@@ -42,17 +40,6 @@ export default function DraggableList({ chips, handleListUpdate }) {
     handleListUpdate(updatedList);
   };
 
-  //   const handleDragEnd = () => {
-  //     const listCopy = [...pages];
-  //     const draggingItemContent = listCopy[draggingItem.current];
-  //     listCopy.splice(draggingItem.current, 1);
-  //     listCopy.splice(dragOverItem.current, 0, draggingItemContent);
-
-  //     draggingItem.current = null;
-  //     dragOverItem.current = null;
-  //     setPages(listCopy);
-  //   };
-
   return (
     <nav aria-label="Breadcrumb" className="flex">
       <ol role="list" className="flex items-center space-x-4 flex-wrap">
@@ -65,13 +52,13 @@ export default function DraggableList({ chips, handleListUpdate }) {
                   <ChevronRightIcon aria-hidden="true" className="size-5 shrink-0 text-gray-400" />
                 )}
                 <div
-                  className={`ml-4 text-sm font-medium text-gray-500 hover:text-gray-700 cursor-move`}
+                  className={`ml-4 text-sm font-medium text-gray-500 hover:text-gray-700 ${
+                    disableDrag ? '' : 'cursor-move'
+                  }`}
                   onDragStart={(e) => handleDragStart(e, idx)}
-                  // onDragEnter={(e) => handleDragEnter(e, idx)}
                   onDragEnter={(e) => handleDragEnter(e, idx)}
-                  // onDragEnd={handleDragEnd}
-                  onDragOver={(e) => e.preventDefault()}
-                  draggable
+                  onDragOver={(e) => (disableDrag ? undefined : e.preventDefault())}
+                  draggable={!disableDrag}
                 >
                   {page.name}
                 </div>

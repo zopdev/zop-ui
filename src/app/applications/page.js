@@ -3,7 +3,6 @@
 import React from 'react';
 import HeadingComponent from '../../../components/HeaderComponents';
 import { PlusCircleIcon } from '@heroicons/react/20/solid';
-import CloudAccountCard from '../../../components/Cards/cloudAccountCard';
 import EmptyComponent from '../../../components/EmptyPageComponent';
 import BlankCloudAccountSvg from '../../../svg/emptyCloudAccount';
 import Link from 'next/link';

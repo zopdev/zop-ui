@@ -3,6 +3,7 @@ import './globals.css';
 import ErrorCatcher from '../../components/ErrorCatcher/ErrorCatcher';
 import NotFound from './not-found';
 import dynamic from 'next/dynamic';
+import ContextProvider from '../../libs/context';
 
 const TopBarWrapper = dynamic(() => import('../../partials/Header'), {
   // ssr: false,
@@ -29,11 +30,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* <ErrorCatcher fallback={<NotFound />}> */}
-        <TopBarWrapper />
-        {/* <div className="px-4 sm:px-6 lg:px-8 w-full overflow-auto text-left pt-8">{children}</div> */}
-        <div>{children}</div>
-        {/* </ErrorCatcher> */}
+        <ErrorCatcher fallback={<NotFound />}>
+          <ContextProvider>
+            <TopBarWrapper />
+            {/* <div className="px-4 sm:px-6 lg:px-8 w-full overflow-auto text-left pt-8">{children}</div> */}
+            <div>{children}</div>
+          </ContextProvider>
+        </ErrorCatcher>
       </body>
     </html>
   );

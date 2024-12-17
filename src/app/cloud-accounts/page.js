@@ -36,16 +36,7 @@ const CloudAccounts = () => {
       {loading && <CompleteLoader />}
       <div className="flex gap-4 w-full justify-start mt-4 flex-wrap">
         {cloudAccounts?.data?.map((item, idx) => {
-          return (
-            <CloudAccountCard
-              key={idx}
-              item={item}
-              view={'cloudAccount'}
-              //   handleLogsOpen={handleLogsOpen}
-              //   handleRetryStatus={handleRetryStatus}
-              //   putToProvider={putToProvider}
-            />
-          );
+          return <CloudAccountCard key={idx} item={item} />;
         })}
       </div>
 

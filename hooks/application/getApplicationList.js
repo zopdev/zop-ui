@@ -7,7 +7,7 @@ const useApplicationList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCloudAccounts = async () => {
+    const fetchApplications = async () => {
       try {
         const data = await getApplication();
         setApplications(data);
@@ -18,7 +18,7 @@ const useApplicationList = () => {
       }
     };
 
-    fetchCloudAccounts();
+    fetchApplications();
   }, []);
 
   return { applications, loading, error };

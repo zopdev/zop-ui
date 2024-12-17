@@ -15,9 +15,8 @@ const CreateApplication = () => {
               <div className="md:col-span-5">
                 <h2 className="text-base font-semibold leading-7 text-gray-900">{`Add Application`}</h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">
-                  Add application details by either selecting an empty project to create a fresh,
-                  blank application or choosing from our predefined templates, which come
-                  pre-configured with the essential setup for your app.
+                  Add application details by giving it a unique name and configuring environments as
+                  needed.
                 </p>
               </div>
               <div className="md:col-span-7">
