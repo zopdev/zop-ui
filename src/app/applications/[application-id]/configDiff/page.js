@@ -27,9 +27,9 @@ function transformEnvironments(inputArray) {
     label: item.name,
     data: {
       Name: item.name,
-      deploymentSpace: () => handleDeploymentList(item.deploymentSpace),
-      createdAt: formatTime(item.createdAt),
-      updatedAt: formatTime(item.updatedAt),
+      'Deployment Space': () => handleDeploymentList(item.deploymentSpace),
+      'Created at': formatTime(item.createdAt),
+      'Updated at': formatTime(item.updatedAt),
     },
   }));
 }

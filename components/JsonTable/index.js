@@ -165,7 +165,7 @@ const JsonComparisonTable = ({
                 paddingTop: 20,
               }}
             >
-              Key
+              {/* Key */}
             </div>
           )}
           <div

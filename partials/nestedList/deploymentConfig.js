@@ -37,8 +37,8 @@ export function transformDeploymentConfigData(input) {
     if (Array.isArray(value)) {
       const transformedArray = transformArray(value);
       deepMerge(result, transformedArray);
-    } else if (value && typeof value === 'object' && 'Type' in value) {
-      result[value.Type] = value;
+    } else if (value && typeof value === 'object' && 'type' in value) {
+      result[value.type] = value;
     } else {
       result[key] = value;
     }

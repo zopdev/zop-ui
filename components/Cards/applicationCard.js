@@ -46,20 +46,20 @@ const ApplicationCard = ({ data, view }) => {
         <div className={`flex gap-2 overflow-auto scroll-hidden`}>
           {data.environments.map((single) => (
             <div
-              className="h-14 bg-gray-900/5 rounded-lg flex justify-between p-2 mb-3 min-w-[250px] w-full"
+              className="h-14 bg-gray-900/5 rounded-lg flex justify-center items-center p-2 mb-3 min-w-[100] w-full"
               key={single.id}
             >
               <div>
-                <p className="text-xs text-gray-500">Environment</p>
+                {/* <p className="text-xs text-gray-500">Environment</p> */}
                 <p className="text-sm text-gray-900 text-start">{single.name}</p>
               </div>
 
-              <div>
+              {/* <div>
                 <div className={`relative flex gap-1`}>
                   <p className="text-xs text-gray-500">Order</p>
                 </div>
                 <p className="text-sm text-gray-900 text-right">{single.level ?? '1'}</p>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

@@ -200,7 +200,7 @@ const StepperComponent = () => {
         )}
         {/* Step 3+: Dynamic Dropdowns */}
         {dropdowns.map((dropdown, index) => (
-          <div key={index} className="space-y-2">
+          <div key={index}>
             <Label htmlFor="name">Select {dropdown?.metadata?.name}</Label>
             <select
               className="w-full p-2 border rounded-md"

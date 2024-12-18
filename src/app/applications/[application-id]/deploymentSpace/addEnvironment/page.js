@@ -39,7 +39,7 @@ const CreateEnvironment = () => {
         <div className="divide-y divide-white/5  ">
           <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 pt-7 sm:px-6 md:grid-cols-12 lg:px-8">
             <div className="md:col-span-5">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">{`Add Application`}</h2>
+              <h2 className="text-base font-semibold leading-7 text-gray-900">{`Add Environment`}</h2>
               <p className="mt-1 text-sm leading-6 text-gray-600">
                 Create a new environment by providing a unique name. This allows you to define a
                 workspace tailored to your needs. You can customize it further after setup.
