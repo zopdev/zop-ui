@@ -21,7 +21,7 @@ const formateData = async (values, provider) => {
   const finalValues = {
     // orgId: tokenInfo?.["tenant-id"],
     name: values.name,
-    provider: provider,
+    provider,
     // configs: {
     //   name:
     //     provider !== "aws"

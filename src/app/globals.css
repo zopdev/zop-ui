@@ -18,3 +18,19 @@ body {
   z-index: 1500;
   transform: translate(-50%, -50%);
 }
+
+::-webkit-scrollbar {
+  height: 4px;
+  width: 0px;
+  background: #cbd5e1;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scroll-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
