@@ -24,7 +24,7 @@ Zop is a comprehensive tool for managing cloud infrastructure. It consists of th
 Run the following command to pull and start the Docker image for the zop-api:
 
 ```bash
-    docker run -d -p 8000:8000 --name zop-api zopdev/zop-api:v0.0.1
+    docker run -d -p 8000:8000 --name zop-api zopdev/zop-api:v0.0.2
 ```
 
 #### zop-ui
@@ -32,7 +32,7 @@ Run the following command to pull and start the Docker image for the zop-api:
 Run the following command to pull and start the Docker image for the zop-ui:
 
 ```bash
-    docker run -d -p 3000:3000 -e NEXT_PUBLIC_API_BASE_URL='http://localhost:8000' --name zop-ui zopdev/zop-ui:v0.0.1
+    docker run -d -p 3000:3000 -e NEXT_PUBLIC_API_BASE_URL='http://localhost:8000' --name zop-ui zopdev/zop-ui:v0.0.2
 ```
 
 > **Note:** The environment variable `NEXT_PUBLIC_API_BASE_URL` is used by zop-ui to connect to the
