@@ -16,7 +16,7 @@ const useAddEnvironment = () => {
     try {
       const data = await addEnvironment(id, values);
       setError(null);
-      router.push(`/applications/${params?.['application-id']}/deploymentSpace`);
+      router.push(`/applications/${params?.['application-id']}/environment`);
       return data;
     } catch (error) {
       setError(error.message);

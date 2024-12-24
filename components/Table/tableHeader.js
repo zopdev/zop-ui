@@ -8,7 +8,7 @@ const TableHeader = ({ headers, action = true }) => {
           <th
             key={header.key}
             scope="col"
-            className={`px-3 py-3.5 text-sm font-semibold text-gray-900 ${
+            className={`px-3 py-3.5 text-sm font-semibold text-gray-900 whitespace-nowrap ${
               header.align === 'right' ? 'text-right' : 'text-left'
             } ${header.className || ''}`}
           >
@@ -16,7 +16,7 @@ const TableHeader = ({ headers, action = true }) => {
           </th>
         ))}
         {action && (
-          <th className="px-3 py-3.5 text-sm font-semibold text-gray-900 text-right">Actions</th>
+          <th className="px-3 py-3.5 text-sm font-semibold text-gray-900 text-center">Actions</th>
         )}
       </tr>
     </thead>

@@ -12,7 +12,7 @@ const ApplicationCard = ({ data, view }) => {
   }, [data?.id, router]);
 
   const handleRedirect = () => {
-    router.push(`/applications/${data?.id}/deploymentSpace`);
+    router.push(`/applications/${data?.id}/environment`);
   };
 
   return (

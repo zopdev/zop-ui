@@ -26,7 +26,8 @@ const DeploymentSpace = () => {
 
   const { value, loading, error } = useGetDeploymentSpace();
 
-  const handleAddEnvConfig = (id) => {
+  const handleAddEnvConfig = (e, id) => {
+    e.stopPropagation();
     router.push(`${pathname}/${id}/configureDeploymentSpace`);
   };
 
@@ -46,10 +47,9 @@ const DeploymentSpace = () => {
       deployment_space: item?.deploymentSpace ? (
         handleDeploymentList(item.deploymentSpace)
       ) : (
-        // <DraggableList chips={chips} disableDrag={true} />
         <button
           className='className="inline-flex mt-4 items-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"'
-          onClick={() => handleAddEnvConfig(item.id)}
+          onClick={(e) => handleAddEnvConfig(e, item.id)}
         >
           <div className={`flex gap-1 items-center`}>
             <PlusIcon aria-hidden="true" className="size-5" />
@@ -67,6 +67,10 @@ const DeploymentSpace = () => {
     (item) => item.id === Number(params?.['application-id']),
   )?.[0];
 
+  const handleRowClick = (row) => {
+    router.push(`${pathname}/${row.id}/services`);
+  };
+
   const breadcrumbList = [
     { name: 'Applications', link: '/applications' },
     {
@@ -80,7 +84,7 @@ const DeploymentSpace = () => {
     <div>
       <BreadCrumbComp breadcrumbList={breadcrumbList} />
       <HeadingComponent
-        title={'Deployment Space'}
+        title={'Environments'}
         actions={
           //   <Tooltip title={currentApplication?.editTooltip}>
           <Link
@@ -103,6 +107,8 @@ const DeploymentSpace = () => {
           // onEdit={handleEdit}
           onDelete={handleDelete}
           action={false}
+          handleRowClick={handleRowClick}
+          enableRowClick={true}
         />
       </div>
 
