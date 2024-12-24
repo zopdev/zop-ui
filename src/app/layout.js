@@ -30,13 +30,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ErrorCatcher fallback={<NotFound />}>
-          <ContextProvider>
-            <TopBarWrapper />
-            {/* <div className="px-4 sm:px-6 lg:px-8 w-full overflow-auto text-left pt-8">{children}</div> */}
-            <div>{children}</div>
-          </ContextProvider>
-        </ErrorCatcher>
+        {/* <ErrorCatcher fallback={<NotFound />}> */}
+        <ContextProvider>
+          <TopBarWrapper />
+          {/* <div className="px-4 sm:px-6 lg:px-8 w-full overflow-auto text-left pt-8">{children}</div> */}
+          <div>{children}</div>
+        </ContextProvider>
+        {/* </ErrorCatcher> */}
       </body>
     </html>
   );

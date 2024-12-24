@@ -5,7 +5,6 @@ import { addDeploymentConfig } from '../../Queries/DeploymentSpace';
 const useAddDeploymentConfig = () => {
   const router = useRouter();
   const params = useParams();
-  //   const [values, setValues] = useState({ name: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -16,7 +15,7 @@ const useAddDeploymentConfig = () => {
     try {
       const data = await addDeploymentConfig(id, values);
       setError(null);
-      router.push(`/applications/${params?.['application-id']}/deploymentSpace`);
+      router.push(`/applications/${params?.['application-id']}/environment`);
       return data;
     } catch (error) {
       setError(error.message);
@@ -26,8 +25,6 @@ const useAddDeploymentConfig = () => {
   };
 
   return {
-    // values,
-    // setValues,
     handleSubmit,
     isLoading,
     error,

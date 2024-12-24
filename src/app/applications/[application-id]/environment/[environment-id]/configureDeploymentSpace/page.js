@@ -20,7 +20,7 @@ const AddDeploymentSpace = () => {
     { name: 'Applications', link: '/applications' },
     {
       name: appData?.APPLICATION_DATA?.isSuccess ? data?.name : 'loading...',
-      link: `/applications/${params?.['application-id']}/deploymentSpace`,
+      link: `/applications/${params?.['application-id']}/environment`,
     },
     {
       name: 'Configure Deployment Space',

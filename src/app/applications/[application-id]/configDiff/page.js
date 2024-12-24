@@ -55,7 +55,7 @@ const ConfigDiff = () => {
     { name: 'Applications', link: '/applications' },
     {
       name: appData?.APPLICATION_DATA?.isSuccess ? appName?.name : 'loading...',
-      link: `/applications/${params?.['application-id']}/deploymentSpace`,
+      link: `/applications/${params?.['application-id']}/environment`,
     },
     {
       name: 'Config Diff',

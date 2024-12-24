@@ -2,10 +2,12 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 import isBetween from 'dayjs/plugin/isBetween';
+import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(isBetween); // Extend dayjs with the isBetween plugin
+dayjs.extend(duration);
 
 const getOrdinalSuffix = (day) => {
   if (day > 3 && day < 21) return 'th'; // Covers 11th, 12th, 13th, etc.
@@ -50,6 +52,24 @@ export const formatTime = (time, type) => {
       }
     }
   }
+};
+
+export const calculateAge = (creationTimestamp) => {
+  const now = dayjs();
+  const creationTime = dayjs(creationTimestamp);
+  const diffInMs = now.diff(creationTime);
+
+  // Calculate days, hours, minutes
+  const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  let result = '';
+  if (days > 0) result += `${days}d`;
+  if (hours > 0) result += `${result ? ' ' : ''}${hours}h`;
+  if (minutes > 0) result += `${result ? ' ' : ''}${minutes}m`;
+
+  return result || '0m'; // Default to "0m" if the difference is negligible
 };
 
 export function ParseJSON(str) {
