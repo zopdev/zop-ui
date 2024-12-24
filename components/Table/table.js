@@ -10,6 +10,7 @@ const Table = ({
   action,
   handleRowClick = () => {},
   renderComponent,
+  enableRowClick,
 }) => {
   return (
     <div className="-mx-4 mt-4 min-w-full h-[75vh] overflow-auto flow-root sm:mx-0">
@@ -29,6 +30,7 @@ const Table = ({
           action={action}
           handleRowClick={handleRowClick}
           renderComponent={renderComponent}
+          enableRowClick={enableRowClick}
         />
       </table>
     </div>

@@ -108,6 +108,7 @@ const DeploymentSpace = () => {
           onDelete={handleDelete}
           action={false}
           handleRowClick={handleRowClick}
+          enableRowClick={true}
         />
       </div>
 

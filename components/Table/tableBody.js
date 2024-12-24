@@ -10,14 +10,15 @@ const TableBody = ({
   action = true,
   handleRowClick = () => {},
   renderComponent,
+  enableRowClick = false,
 }) => {
   return (
     <tbody>
       {data?.map((row, rowIndex) => (
         <tr
           key={row.id || rowIndex}
-          className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer group"
-          onClick={() => handleRowClick(row)}
+          className={`border-b border-gray-200 group ${enableRowClick && 'hover:bg-gray-50 cursor-pointer'}`}
+          onClick={() => enableRowClick && handleRowClick(row)}
         >
           {headers.map((header) => (
             <td
