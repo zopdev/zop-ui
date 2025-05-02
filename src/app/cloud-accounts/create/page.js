@@ -3,22 +3,29 @@
 import React, { useState } from 'react';
 import CloudForm from '../../../../partials/cloudAccount/createForm';
 
-const PROVIDER_OPTIONS = {
-  0: 'gcp',
-  // 1: "aws",
-  // 2: "azure",
-};
+const CreateCloud = ({ audit, setIsComplete, updateData, data }) => {
+  const PROVIDER_OPTIONS = {
+    0: 'gcp',
+    // 1: "aws",
+    // 2: "azure",
+  };
 
-const PROVIDER_TO_TAB_OPTIONS = {
-  gcp: 0,
-  // aws: 1,
-  // azure: 2,
-};
+  const PROVIDER_TO_TAB_OPTIONS = {
+    gcp: 0,
+    // aws: 1,
+    // azure: 2,
+  };
+  const [formStatus, setFormStatus] = useState({
+    isValid: false,
+    data: {},
+  });
 
-// const FORM_PROVIDER_OPTIONS = ["GCP", "AWS", "AZURE"];
-const FORM_PROVIDER_OPTIONS = ['GCP'];
+  const handleAuditStatusChange = (isValid, data) => {
+    setFormStatus({ isValid, data });
+  };
+  // const FORM_PROVIDER_OPTIONS = ["GCP", "AWS", "AZURE"];
+  const FORM_PROVIDER_OPTIONS = ['GCP'];
 
-const CreateCloud = () => {
   const [value, setValue] = useState(PROVIDER_TO_TAB_OPTIONS.gcp);
 
   const options = FORM_PROVIDER_OPTIONS.map((item) => ({
@@ -44,11 +51,16 @@ const CreateCloud = () => {
             </div>
             <div className="md:col-span-7">
               <CloudForm
+                audit={audit}
                 provider={PROVIDER_OPTIONS[value]}
                 handleTabChange={handleChange}
                 options={options}
                 tabValue={value}
                 value={value}
+                onAuditStatusChange={handleAuditStatusChange}
+                setIsComplete={setIsComplete}
+                updateData={updateData}
+                data={data}
               />
             </div>
           </div>

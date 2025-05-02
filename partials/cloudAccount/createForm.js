@@ -23,8 +23,53 @@ export const isValidJSON = (str) => {
   );
 };
 
-const CloudForm = ({ provider, value, handleTabChange, options, tabValue }) => {
+const CloudForm = ({
+  provider,
+  value,
+  handleTabChange,
+  options,
+  tabValue,
+  audit,
+  onAuditStatusChange,
+  setIsComplete,
+  updateData,
+  data,
+}) => {
   const { values, setValues, handleSubmit, isLoading, error } = useAddCloudAccount();
+  const isFormValid = (values, provider) => {
+    if (audit === true) {
+      if (!values?.name) return false;
+
+      if (provider === 'gcp') {
+        return values?.credentials && isValidJSON(values?.credentials);
+      }
+      // if (provider === 'gcp') {
+      //   return values?.credentials;
+      // }
+      if (provider === 'aws') {
+        return values?.aws_access_key_id && values?.aws_secret_access_key;
+      }
+      if (provider === 'azure') {
+        return values?.projectName && values?.tenantId && values?.appId && values?.password;
+      }
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    if (audit === true) {
+      if (audit && typeof onAuditStatusChange === 'function') {
+        const valid = isFormValid(values, provider);
+        const updatedData = { ...data, [name]: value };
+        updateData(updatedData);
+        if (valid) {
+          setIsComplete(true);
+          updateData(values);
+        }
+        onAuditStatusChange(valid, values); // pass validity and full form data
+      }
+    }
+  }, [values, audit, provider]);
 
   const handleChange = (e) => {
     if (e.target.name === 'credentials' && isValidJSON(e.target.value)) {
@@ -112,7 +157,7 @@ const CloudForm = ({ provider, value, handleTabChange, options, tabValue }) => {
               onChange={handleChange}
               name="name"
               placeholder="Enter name"
-              value={values?.name}
+              value={data?.name || values?.name}
               helperText={
                 values?.name?.length < 255
                   ? ' '
@@ -138,7 +183,7 @@ const CloudForm = ({ provider, value, handleTabChange, options, tabValue }) => {
                 variant="outlined"
                 name="credentials"
                 onChange={handleChange}
-                value={values?.credentials}
+                value={data?.credentials || values?.credentials}
                 error={values?.credentials ? !isValidJSON(values?.credentials) : false}
                 helperText={
                   values?.credentials && !isValidJSON(values?.credentials)
@@ -256,22 +301,25 @@ const CloudForm = ({ provider, value, handleTabChange, options, tabValue }) => {
           {error && <ErrorComponent errorText={error} className={' !p-2'} />}
         </div>
       </div>
-
-      <div className="mt-8 flex gap-4">
-        <Button
-          type="submit"
-          id="connect-provider"
-          disabled={(values?.credentials ? !isValidJSON(values?.credentials) : false) || isLoading}
-        >
-          Add
-          {isLoading && (
-            <div
-              style={{ borderTopColor: 'transparent' }}
-              className="w-4 h-4 border-4 border-blue-200 rounded-full animate-spin"
-            />
-          )}
-        </Button>
-      </div>
+      {!audit && (
+        <div className="mt-8 flex gap-4">
+          <Button
+            type="submit"
+            id="connect-provider"
+            disabled={
+              (values?.credentials ? !isValidJSON(values?.credentials) : false) || isLoading
+            }
+          >
+            Add
+            {isLoading && (
+              <div
+                style={{ borderTopColor: 'transparent' }}
+                className="w-4 h-4 border-4 border-blue-200 rounded-full animate-spin"
+              />
+            )}
+          </Button>
+        </div>
+      )}
     </form>
   );
 };
