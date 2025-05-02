@@ -13,7 +13,6 @@ import {
 import { PROVIDER_ICON_MAPPER } from '../../constant';
 import ResourceStatus from '../ResourceStatus/ResourceStatus';
 
-// Available icons mapping
 const ICONS = {
   cloud: CloudIcon,
   server: ServerIcon,
@@ -59,20 +58,15 @@ function CloudAccountAuditCard({
     unchecked: { bg: 'bg-gray-100', icon: 'text-gray-500' },
   },
 }) {
-  // Set initial active tab to first category if not provided
   const [activeTab, setActiveTab] = useState(
     initialActiveTab || (Object.keys(auditData).length > 0 ? Object.keys(auditData)[0] : ''),
   );
-
-  // Get category icon based on category name
   const getCategoryIcon = (category) => {
-    // Check if custom icon mapping is provided for this category
     if (categoryIcons[category]) {
       const IconComponent = ICONS[categoryIcons[category]] || ICONS.exclamation;
       return <IconComponent className="h-4 w-4" />;
     }
 
-    // Default icon mapping
     switch (category) {
       case 'stale':
         return <ServerIcon className="h-4 w-4" />;
@@ -92,7 +86,6 @@ function CloudAccountAuditCard({
   };
 
   const getStatusPercentage = (status, category) => {
-    // Handle edge case of total being 0
     if (!auditData[category] || auditData[category].total === 0) return 0;
     return (auditData[category][status] / auditData[category].total) * 100;
   };
@@ -150,7 +143,6 @@ function CloudAccountAuditCard({
 
   return (
     <>
-      {/* Card */}
       <div className="w-full max-w-lg bg-white rounded-lg shadow-md overflow-hidden">
         {/* Card Header */}
         <div className="p-4 pb-2">
@@ -161,9 +153,6 @@ function CloudAccountAuditCard({
             <div className="flex-1">
               <div className="flex items-center gap-3">
                 <h3 className="text-xl font-semibold">{title}</h3>
-                {/* <div */}
-                {/*  className={`ml-2 w-2 h-2 rounded-full ${status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`} */}
-                {/* ></div> */}
                 <ResourceStatus status={status} />
               </div>
               <p className="text-sm text-gray-500">{subtitle}</p>
@@ -171,11 +160,8 @@ function CloudAccountAuditCard({
           </div>
         </div>
 
-        {/* Card Content */}
         <div className="p-4">
-          {/* Custom Tabs */}
           <div className="w-full">
-            {/* Tab List */}
             {Object.keys(auditData).length > 0 && (
               <div className="w-full overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 <div className="inline-flex min-w-full p-1 bg-gray-100 rounded-lg">
@@ -197,7 +183,6 @@ function CloudAccountAuditCard({
               </div>
             )}
 
-            {/* Tab Content */}
             <div className="mt-4">
               {Object.keys(auditData).map((category) => (
                 <div key={category} className={`${activeTab === category ? 'block' : 'hidden'}`}>

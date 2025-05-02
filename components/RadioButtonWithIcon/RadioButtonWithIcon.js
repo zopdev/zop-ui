@@ -11,7 +11,6 @@ const DynamicFormRadioWithIcon = ({
 }) => {
   const dataArrRef = useRef(null);
 
-  // Initialize the default selected value
   useEffect(() => {
     if (defaultSelected !== undefined && defaultSelected !== null) {
       dataArrRef.current = `option-${defaultSelected}-${name}`;
@@ -81,7 +80,6 @@ const DynamicFormRadioWithIcon = ({
     );
   }
 
-  // Fallback for single radio option
   const inputId = `option-${name}`;
   return (
     <div
