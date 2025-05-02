@@ -47,3 +47,8 @@ body {
 .animate-loader {
   animation: loader 1.5s infinite linear;
 }
+
+
+.status-rounded {
+  @apply flex w-2 h-2 rounded-full bg-green-400;
+}

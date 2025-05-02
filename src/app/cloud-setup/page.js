@@ -9,27 +9,27 @@ const ResourceAudit = ({ data, updateData, setIsComplete }) => {
   const auditOptions = [
     {
       label: 'Stale',
-      description: 'Resources that are no longer in use',
+      description: 'Identify the resources that are no longer in use.',
       value: 'Stale',
-      icon: 'https://cdn-icons-png.flaticon.com/512/1828/1828665.png',
+      // icon: 'https://cdn-icons-png.flaticon.com/512/1214/1214428.png',
     },
     {
-      label: 'OverProvisioned',
+      label: 'Overprovisioned',
       description: 'Resources that have more capacity than needed',
-      value: 'OverProvisioned',
-      icon: 'https://cdn-icons-png.flaticon.com/512/929/929564.png',
+      value: 'Overprovisioned',
+      // icon: 'https://cdn-icons-png.flaticon.com/512/2910/2910768.png',
     },
     {
       label: 'Security',
       description: 'Resources with potential security issues',
       value: 'Security',
-      icon: 'https://cdn-icons-png.flaticon.com/512/565/565547.png',
+      // icon: 'https://cdn-icons-png.flaticon.com/512/2913/2913465.png',
     },
     {
       label: 'Run All',
       description: 'Run all types of audits on your resources',
       value: 'run-all',
-      icon: 'https://cdn-icons-png.flaticon.com/512/189/189254.png',
+      // icon: 'https://cdn-icons-png.flaticon.com/512/3524/3524636.png',
     },
   ];
   const handleChange = (newValue) => {
@@ -52,16 +52,15 @@ const ResourceAudit = ({ data, updateData, setIsComplete }) => {
   }, [data, updateData, setIsComplete]);
 
   return (
-    <div className="md:flex xs:space-y-4 space-x-8 min-h-96">
-      {/* Left Side Content */}
+    <div className="md:flex xs:space-y-12 space-x-8 min-h-[28rem] mt-10 ml-2">
       <div className="md:w-[34%] md:m-12 md:mx-14">
-        <h2 className="text-md font-semibold mb-4">Select Resource Audit Type</h2>
+        <h2 className="text-md font-semibold mb-2">Select an Audit Type</h2>
         <p className="text-gray-600">
-          Choose an audit type to evaluate different aspects of your cloud resources.
+          Evaluate your cloud environment for security risks, performance bottlenecks, or cost
+          inefficiencies.
         </p>
       </div>
-      {/* Right Side - Replaced with DynamicFormRadioWithIcon */}
-      <div className="md:w-[45%] md:my-12">
+      <div className="md:w-[45%] md:my-14">
         <DynamicFormRadioWithIcon
           options={auditOptions}
           name="resource-audit"
@@ -106,17 +105,14 @@ const ScheduleStep = ({ data, updateData, setIsComplete }) => {
   }, [data, setIsComplete]);
 
   return (
-    <div className="md:flex xs:space-y-4 space-x-8 min-h-96">
+    <div className="md:flex xs:space-y-12 space-x-8 min-h-[28rem] mt-10 ml-2">
       <div className="md:w-[34%] md:m-12 md:mx-14">
-        <h2 className="text-xl font-semibold mb-4">Cron Schedule Info</h2>
+        <h2 className="text-md font-semibold mb-2">Give Audit Schedule</h2>
         <p className="text-gray-600 mb-2">
-          Provide a valid cron expression like{' '}
-          <code className="bg-gray-100 px-1 rounded">*/5 * * * *</code>. This will determine how
-          often the task runs.
+          Specify how often you want to run the resource audit by entering a time interval.
         </p>
         <p className="text-sm text-gray-500">
-          You can also use special strings like <code>@daily</code>, <code>@hourly</code>, or{' '}
-          <code>@every 5m</code>.
+          You can use special formats like @daily, @hourly, or @every 5m to set the frequency.
         </p>
       </div>
 
@@ -125,62 +121,16 @@ const ScheduleStep = ({ data, updateData, setIsComplete }) => {
         <input
           type="text"
           name="cronSchedule"
-          value={data.cronSchedule || ''}
+          value={data?.cronSchedule || ''}
           onChange={handleChange}
-          placeholder="*/5 * * * *"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+          placeholder="* 5 * * *"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
         />
         {error && <span className="text-yellow-500 text-sm">{error}</span>}
       </div>
     </div>
   );
 };
-
-// Review Step
-// const ReviewStep = ({ allData, isLastStep, setIsComplete }) => {
-//   // Review step is always complete
-//   useEffect(() => {
-//     setIsComplete(true);
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, []);
-//
-//   return (
-//     <div className="space-y-6">
-//       <div className="bg-gray-50 p-4 rounded-md">
-//         <h3 className="text-lg font-medium text-gray-900 mb-2">Personal Information</h3>
-//         <p>
-//           <span className="font-medium">Name:</span> {allData[0]?.fullName}
-//         </p>
-//         <p>
-//           <span className="font-medium">Email:</span> {allData[0]?.email}
-//         </p>
-//       </div>
-//
-//       <div className="bg-gray-50 p-4 rounded-md">
-//         <h3 className="text-lg font-medium text-gray-900 mb-2">Address</h3>
-//         <p>
-//           <span className="font-medium">Street:</span> {allData[1]?.street}
-//         </p>
-//         <p>
-//           <span className="font-medium">City:</span> {allData[1]?.city}
-//         </p>
-//         <p>
-//           <span className="font-medium">Zip Code:</span> {allData[1]?.zipCode}
-//         </p>
-//       </div>
-//
-//       <div className="bg-gray-50 p-4 rounded-md">
-//         <h3 className="text-lg font-medium text-gray-900 mb-2">Preferences</h3>
-//         <p>
-//           <span className="font-medium">Contact Method:</span> {allData[2]?.contactMethod}
-//         </p>
-//         <p>
-//           <span className="font-medium">Newsletter:</span> {allData[2]?.newsletter ? 'Yes' : 'No'}
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
 
 const Audit = () => {
   // const { applications, loading, error } = useApplicationList();
@@ -199,10 +149,6 @@ const Audit = () => {
       title: 'Schedule',
       component: ScheduleStep,
     },
-    // {
-    //   title: "Review",
-    //   component: ReviewStep,
-    // },
   ];
   const handleComplete = (data) => {
     console.log('All steps completed! Final data:', data);

@@ -35,7 +35,6 @@ const DynamicFormRadioWithIcon = ({
       <div className={`flex gap-3 items-center relative flex-wrap mt-2`}>
         {options.map((option, index) => {
           const inputId = `option-${index}-${name}`;
-          const isChecked = inputId === dataArrRef.current;
 
           return (
             <div

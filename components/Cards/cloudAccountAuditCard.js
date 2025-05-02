@@ -10,64 +10,69 @@ import {
   ShieldCheckIcon,
   GlobeAltIcon,
 } from '@heroicons/react/24/outline';
+import { PROVIDER_ICON_MAPPER } from '../../constant';
+import ResourceStatus from '../ResourceStatus/ResourceStatus';
 
-export default function CloudAccountAuditCard() {
-  const [activeTab, setActiveTab] = useState('stale');
+// Available icons mapping
+const ICONS = {
+  cloud: CloudIcon,
+  server: ServerIcon,
+  shield: ShieldCheckIcon,
+  globe: GlobeAltIcon,
+  exclamation: ExclamationCircleIcon,
+  check: CheckCircleIcon,
+  clock: ClockIcon,
+};
 
-  // Sample data with more categories
-  const auditData = {
-    stale: {
-      danger: 3,
-      warning: 5,
-      pending: 2,
-      compliant: 18,
-      unchecked: 1,
-      total: 29,
-    },
-    overprovisioned: {
-      danger: 2,
-      warning: 4,
-      pending: 1,
-      compliant: 22,
-      unchecked: 3,
-      total: 32,
-    },
-    security: {
-      danger: 5,
-      warning: 3,
-      pending: 0,
-      compliant: 15,
-      unchecked: 2,
-      total: 25,
-    },
-    network: {
-      danger: 1,
-      warning: 2,
-      pending: 1,
-      compliant: 10,
-      unchecked: 0,
-      total: 14,
-    },
-    storage: {
-      danger: 4,
-      warning: 2,
-      pending: 3,
-      compliant: 20,
-      unchecked: 1,
-      total: 30,
-    },
-    compute: {
-      danger: 2,
-      warning: 3,
-      pending: 1,
-      compliant: 25,
-      unchecked: 2,
-      total: 33,
-    },
-  };
+export default function CloudAccountAuditCards({ cloudAccounts = [] }) {
+  return (
+    <div className="space-y-4 flex justify-center items-center flex-col">
+      {cloudAccounts?.map((account, index) => (
+        <CloudAccountAuditCard key={account.id || index} {...account} />
+      ))}
+    </div>
+  );
+}
+
+function CloudAccountAuditCard({
+  title,
+  subtitle,
+  status,
+  providerType,
+  auditData = {},
+  lastUpdatedBy,
+  lastUpdatedDate,
+  initialActiveTab,
+  categoryIcons = {},
+  statusBarColors = {
+    danger: 'bg-red-500',
+    warning: 'bg-yellow-500',
+    pending: 'bg-primary-500',
+    compliant: 'bg-green-500',
+    unchecked: 'bg-gray-300',
+  },
+  statusIconColors = {
+    danger: { bg: 'bg-red-100', icon: 'text-red-500' },
+    warning: { bg: 'bg-yellow-100', icon: 'text-yellow-500' },
+    pending: { bg: 'bg-primary-100', icon: 'text-primary-500' },
+    compliant: { bg: 'bg-green-100', icon: 'text-green-500' },
+    unchecked: { bg: 'bg-gray-100', icon: 'text-gray-500' },
+  },
+}) {
+  // Set initial active tab to first category if not provided
+  const [activeTab, setActiveTab] = useState(
+    initialActiveTab || (Object.keys(auditData).length > 0 ? Object.keys(auditData)[0] : ''),
+  );
 
   // Get category icon based on category name
   const getCategoryIcon = (category) => {
+    // Check if custom icon mapping is provided for this category
+    if (categoryIcons[category]) {
+      const IconComponent = ICONS[categoryIcons[category]] || ICONS.exclamation;
+      return <IconComponent className="h-4 w-4" />;
+    }
+
+    // Default icon mapping
     switch (category) {
       case 'stale':
         return <ServerIcon className="h-4 w-4" />;
@@ -88,124 +93,80 @@ export default function CloudAccountAuditCard() {
 
   const getStatusPercentage = (status, category) => {
     // Handle edge case of total being 0
-    if (auditData[category].total === 0) return 0;
+    if (!auditData[category] || auditData[category].total === 0) return 0;
     return (auditData[category][status] / auditData[category].total) * 100;
   };
 
   const renderStatusBar = (category) => {
+    if (!auditData[category]) return null;
+
     return (
       <div className="w-full h-2 flex rounded-full overflow-hidden mt-2">
-        <div
-          className="bg-red-500"
-          style={{
-            width: `${getStatusPercentage('danger', category)}%`,
-            minWidth: auditData[category].danger > 0 ? '4px' : '0', // Ensure visibility for small values
-          }}
-        />
-        <div
-          className="bg-yellow-500"
-          style={{
-            width: `${getStatusPercentage('warning', category)}%`,
-            minWidth: auditData[category].warning > 0 ? '4px' : '0',
-          }}
-        />
-        <div
-          className="bg-primary-500"
-          style={{
-            width: `${getStatusPercentage('pending', category)}%`,
-            minWidth: auditData[category].pending > 0 ? '4px' : '0',
-          }}
-        />
-        <div
-          className="bg-green-500"
-          style={{
-            width: `${getStatusPercentage('compliant', category)}%`,
-            minWidth: auditData[category].compliant > 0 ? '4px' : '0',
-          }}
-        />
-        <div
-          className="bg-gray-300"
-          style={{
-            width: `${getStatusPercentage('unchecked', category)}%`,
-            minWidth: auditData[category].unchecked > 0 ? '4px' : '0',
-          }}
-        />
+        {Object.keys(statusBarColors).map((statusKey) => (
+          <div
+            key={statusKey}
+            className={statusBarColors[statusKey]}
+            style={{
+              width: `${getStatusPercentage(statusKey, category)}%`,
+              minWidth: auditData[category][statusKey] > 0 ? '4px' : '0', // Ensure visibility for small values
+            }}
+          />
+        ))}
       </div>
     );
   };
 
   const renderStatusDetails = (category) => {
+    if (!auditData[category]) return null;
+
+    const statuses = Object.keys(statusIconColors);
+
     return (
-      <div className="grid grid-cols-5 gap-2 mt-4">
-        <div className="flex flex-col items-center">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-100">
-            <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-          </div>
-          <span className="text-xs font-medium mt-1">Danger</span>
-          <span className="text-lg font-bold">{auditData[category].danger}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100">
-            <ExclamationCircleIcon className="h-5 w-5 text-yellow-500" />
-          </div>
-          <span className="text-xs font-medium mt-1">Warning</span>
-          <span className="text-lg font-bold">{auditData[category].warning}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary-100">
-            <ClockIcon className="h-5 w-5 text-primary-500" />
-          </div>
-          <span className="text-xs font-medium mt-1">Pending</span>
-          <span className="text-lg font-bold">{auditData[category].pending}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100">
-            <CheckCircleIcon className="h-5 w-5 text-green-500" />
-          </div>
-          <span className="text-xs font-medium mt-1">Compliant</span>
-          <span className="text-lg font-bold">{auditData[category].compliant}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100">
-            <ExclamationCircleIcon className="h-5 w-5 text-gray-500" />
-          </div>
-          <span className="text-xs font-medium mt-1">Unchecked</span>
-          <span className="text-lg font-bold">{auditData[category].unchecked}</span>
-        </div>
+      <div className="flex justify-between mt-4">
+        {statuses.map((statusKey) => {
+          if (typeof auditData[category][statusKey] === 'undefined') return null;
+
+          let StatusIcon = statusKey === 'pending' ? ClockIcon : ExclamationCircleIcon;
+          if (statusKey === 'compliant') StatusIcon = CheckCircleIcon;
+
+          const bgColor = statusIconColors[statusKey].bg;
+          const iconColor = statusIconColors[statusKey].icon;
+
+          return (
+            <div key={statusKey} className="flex flex-col items-center">
+              <div className={`flex items-center justify-center w-8 h-8 rounded-full ${bgColor}`}>
+                <StatusIcon className={`h-5 w-5 ${iconColor}`} />
+              </div>
+              <span className="text-xs font-medium mt-1">
+                {statusKey.charAt(0).toUpperCase() + statusKey.slice(1)}
+              </span>
+              <span className="text-lg">{auditData[category][statusKey]}</span>
+            </div>
+          );
+        })}
       </div>
     );
   };
 
-  // Add this CSS class to hide scrollbar but keep functionality
-  const scrollbarHideStyle = `
-  .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
-  }
-`;
-
   return (
     <>
-      <style jsx global>
-        {scrollbarHideStyle}
-      </style>
       {/* Card */}
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="w-full max-w-lg bg-white rounded-lg shadow-md overflow-hidden">
         {/* Card Header */}
         <div className="p-4 pb-2">
           <div className="flex items-center space-x-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary-100">
-              <CloudIcon className="h-5 w-5 text-primary-500" />
+            <div className="flex items-center justify-center w-8 h-8 rounded-full ">
+              {PROVIDER_ICON_MAPPER[providerType]}
             </div>
             <div className="flex-1">
-              <div className="flex items-center">
-                <h3 className="text-xl font-semibold">Zop Cloud</h3>
-                <div className="ml-2 w-2 h-2 rounded-full bg-green-500"></div>
+              <div className="flex items-center gap-3">
+                <h3 className="text-xl font-semibold">{title}</h3>
+                {/* <div */}
+                {/*  className={`ml-2 w-2 h-2 rounded-full ${status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`} */}
+                {/* ></div> */}
+                <ResourceStatus status={status} />
               </div>
-              <p className="text-sm text-gray-500">2 Apps</p>
+              <p className="text-sm text-gray-500">{subtitle}</p>
             </div>
           </div>
         </div>
@@ -215,24 +176,26 @@ export default function CloudAccountAuditCard() {
           {/* Custom Tabs */}
           <div className="w-full">
             {/* Tab List */}
-            <div className="w-full overflow-x-auto pb-2 scrollbar-hide">
-              <div className="inline-flex min-w-full p-1 bg-gray-100 rounded-lg">
-                {Object.keys(auditData).map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveTab(category)}
-                    className={`flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
-                      activeTab === category
-                        ? 'bg-white shadow-sm'
-                        : 'text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {getCategoryIcon(category)}
-                    <span>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
-                  </button>
-                ))}
+            {Object.keys(auditData).length > 0 && (
+              <div className="w-full overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div className="inline-flex min-w-full p-1 bg-gray-100 rounded-lg">
+                  {Object.keys(auditData).map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setActiveTab(category)}
+                      className={`flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                        activeTab === category
+                          ? 'bg-white shadow-sm'
+                          : 'text-gray-600 hover:bg-gray-200'
+                      }`}
+                    >
+                      {getCategoryIcon(category)}
+                      <span>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Tab Content */}
             <div className="mt-4">
@@ -245,10 +208,12 @@ export default function CloudAccountAuditCard() {
             </div>
           </div>
 
-          <div className="mt-4 pt-4 border-t text-xs text-gray-500">
-            <p>Updated By owner@zop.dev</p>
-            <p>28th January 2025, 15:38</p>
-          </div>
+          {(lastUpdatedBy || lastUpdatedDate) && (
+            <div className="mt-4 pt-4 border-t text-xs text-gray-500">
+              {/* {lastUpdatedBy && <p>Updated By {lastUpdatedBy}</p>} */}
+              {lastUpdatedDate && <p>{lastUpdatedDate}</p>}
+            </div>
+          )}
         </div>
       </div>
     </>

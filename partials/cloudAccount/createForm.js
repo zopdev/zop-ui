@@ -132,7 +132,9 @@ const CloudForm = ({
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <div className="grid grid-cols-1 gap-x-6 gap-y-0 sm:max-w-xl sm:grid-cols-6">
+      <div
+        className={`grid grid-cols-1 gap-x-10 gap-y-0 sm:max-w-xl sm:grid-cols-6 ${audit ? 'ml-5' : 'ml-5'} `}
+      >
         <div className="col-span-full flex gap-4 mb-8 flex-wrap">
           {options?.map((item, idx) => (
             <Button
