@@ -176,7 +176,7 @@ const PodsDetails = ({ formData }) => {
                         <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
                           <div className="flex flex-wrap gap-2">
                             <div className="flex gap-2 flex-wrap">
-                              {container?.env.map((env, index) => (
+                              {container?.env?.map((env, index) => (
                                 <div
                                   key={index}
                                   className="px-3 py-1 bg-gray-100 text-gray-700 rounded-md border border-gray-300"
