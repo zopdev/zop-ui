@@ -15,14 +15,6 @@ const CreateCloud = ({ audit, setIsComplete, updateData, data }) => {
     // aws: 1,
     // azure: 2,
   };
-  const [formStatus, setFormStatus] = useState({
-    isValid: false,
-    data: {},
-  });
-
-  const handleAuditStatusChange = (isValid, data) => {
-    setFormStatus({ isValid, data });
-  };
   // const FORM_PROVIDER_OPTIONS = ["GCP", "AWS", "AZURE"];
   const FORM_PROVIDER_OPTIONS = ['GCP'];
 
@@ -57,7 +49,6 @@ const CreateCloud = ({ audit, setIsComplete, updateData, data }) => {
                 options={options}
                 tabValue={value}
                 value={value}
-                onAuditStatusChange={handleAuditStatusChange}
                 setIsComplete={setIsComplete}
                 updateData={updateData}
                 data={data}

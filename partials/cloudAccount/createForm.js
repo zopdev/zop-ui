@@ -30,7 +30,6 @@ const CloudForm = ({
   options,
   tabValue,
   audit,
-  onAuditStatusChange,
   setIsComplete,
   updateData,
   data,
@@ -43,9 +42,6 @@ const CloudForm = ({
       if (provider === 'gcp') {
         return values?.credentials && isValidJSON(values?.credentials);
       }
-      // if (provider === 'gcp') {
-      //   return values?.credentials;
-      // }
       if (provider === 'aws') {
         return values?.aws_access_key_id && values?.aws_secret_access_key;
       }
@@ -58,15 +54,12 @@ const CloudForm = ({
 
   useEffect(() => {
     if (audit === true) {
-      if (audit && typeof onAuditStatusChange === 'function') {
-        const valid = isFormValid(values, provider);
-        const updatedData = { ...data, [name]: value };
-        updateData(updatedData);
-        if (valid) {
-          setIsComplete(true);
-          updateData(values);
-        }
-        onAuditStatusChange(valid, values); // pass validity and full form data
+      const valid = isFormValid(values, provider);
+      const updatedData = { ...data, [name]: value };
+      updateData(updatedData);
+      if (valid) {
+        setIsComplete(true);
+        updateData(values);
       }
     }
   }, [values, audit, provider]);

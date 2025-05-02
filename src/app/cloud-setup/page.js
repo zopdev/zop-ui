@@ -65,7 +65,7 @@ const ResourceAudit = ({ data, updateData, setIsComplete }) => {
           options={auditOptions}
           name="resource-audit"
           value={data?.selectedOption}
-          defaultSelected={'run-all'}
+          defaultSelected={data?.selectedOption || 'run-all'}
           onChange={handleChange}
           orientation="horizontal"
         />
@@ -150,12 +150,9 @@ const Audit = () => {
       component: ScheduleStep,
     },
   ];
-  const handleComplete = (data) => {
-    console.log('All steps completed! Final data:', data);
-  };
   return (
     <div className="px-4 sm:px-6 lg:px-8 w-full overflow-auto text-left pt-8 ">
-      <StepperUI steps={steps} onComplete={handleComplete} />
+      <StepperUI steps={steps} />
       {/* <EmptyComponent */}
       {/*  imageComponent={<BlankCloudAccountSvg />} */}
       {/*  redirectLink={'/applications/create'} */}
