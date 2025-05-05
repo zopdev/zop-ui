@@ -37,8 +37,13 @@ const DashboardCard = ({
         </ul>
       </div>
       <div className="flex items-center p-6 pt-0">
-        <Button onClick={onClick} variant={buttonVariant} className="w-full justify-center">
-          {buttonIcon}
+        <Button
+          onClick={onClick}
+          variant={buttonVariant}
+          fullWidth={true}
+          icon={buttonIcon}
+          startEndornment={true}
+        >
           {buttonText}
         </Button>
       </div>

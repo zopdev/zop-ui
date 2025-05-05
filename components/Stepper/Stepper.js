@@ -178,7 +178,7 @@ const Stepper = ({ steps, onComplete }) => {
             onClick={goToPreviousStep}
           >
             <ChevronLeftIcon className="w-3 h-3 mr-1" />
-            {!isMobile ? 'Previous' : ''}
+            {!isMobile ? 'Back' : ''}
           </Button>
         ) : (
           <div />

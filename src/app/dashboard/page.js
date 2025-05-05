@@ -160,7 +160,7 @@ const Dashboard = () => {
     title: 'Audit Your Cloud',
     description:
       'Analyze your cloud infrastructure to identify stale resources, overprovisioned assets, and critical security vulnerabilities.',
-    icon: <CloudIcon className="h-6 w-6 text-gray-500" />,
+    icon: <CloudIcon className="h-6 w-6 text-white" />,
     features: ['Ensure Compliance', 'Performance optimization', 'Cost efficiency recommendations'],
     buttonText: 'Audit Your Cloud',
     buttonIcon: <CloudIcon className="h-5 w-5 text-white" />,
@@ -170,7 +170,7 @@ const Dashboard = () => {
   const deployCardData = {
     title: 'Deploy Application',
     description: 'Deploy your apps quickly with our streamlined and reliable deployment process.',
-    icon: <RocketLaunchIcon className="h-6 w-6 text-gray-500" />,
+    icon: <RocketLaunchIcon className="h-6 w-6 text-white" />,
     features: ['Automate Deployments', 'Improve Reliability', 'Scale Seamlessly'],
     buttonText: 'Deploy Application',
     buttonIcon: <RocketLaunchIcon className="h-5 w-5 text-white" />,
